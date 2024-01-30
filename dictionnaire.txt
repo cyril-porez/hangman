@@ -1,0 +1,9 @@
+#Fruits
+pomme,fruits,facile
+banane,fruits,facile
+noix de coco,fruits,moyen
+papaye,fruits,difficile
+#Langages
+html,Langages,facile
+assembly,Langages,difficile
+cobol,langages,wth?
