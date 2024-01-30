@@ -9,6 +9,7 @@ typedef struct Node {
 Node* createNode(const char *data);
 void push(Node **headRef, const char *str);
 void displayListChain(Node *node);
+int getListSize(Node *listChain);
 char *getRandomElement(Node *chainList);
 
 
