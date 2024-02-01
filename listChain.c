@@ -2,11 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-
-typedef struct Node {
-  char *data;
-  struct Node *next;
-}Node;
+#include "listChain.h"
 
 Node* createNode(const char *data)
 {
@@ -66,18 +62,18 @@ char *getRandomElement(Node *chainList)
     return chainList->data;
 }
 
-int main() 
-{
-    Node *chain = NULL;
-    push(&chain, "test");
-    push(&chain, "test2");
-    push(&chain, "Bonjour");
-    push(&chain, "azerty");
-    push(&chain, "poiuytreza");
+// int main() 
+// {
+//     Node *chain = NULL;
+//     push(&chain, "test");
+//     push(&chain, "test2");
+//     push(&chain, "Bonjour");
+//     push(&chain, "azerty");
+//     push(&chain, "poiuytreza");
 
-    displayListChain(chain);
-    printf("%d\n", getListSize(chain));
-    printf("%s", getRandomElement(chain));
+//     displayListChain(chain);
+//     printf("%d\n", getListSize(chain));
+//     printf("%s", getRandomElement(chain));
 
 
-}
+// }

@@ -1,16 +1,81 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "listChain.h"
+#include <stdbool.h>
 
 
-void potence() {
-  printf("%s","\n  -----\n");
-  printf("%s","  |   |\n");
-  printf("%s","  0   |\n");
-  printf("%s"," /|\\  |\n");
-  printf("%s"," / \\  |\n");
-  printf("%s","      |\n");
-  printf("%s","--------\n");
+char *maskWord(char *word)
+{
+    int len = strlen(word);
+
+    if (len > 2)
+    {
+        for(int i = 1; i < len - 1; i++)
+        {
+            word[i] = '*';
+        }
+    }
+
+    return word;
+}
+
+void rules()
+{
+    printf("\n============================\n");
+    printf("        JEU DU PENDU        \n");
+    printf("============================\n");
+}
+
+void potence(char *findWord, int error) {
+    printf("\nerreur => %d", error);
+    printf("\n  -----        %s\n", findWord);
+    printf("  |   |\n");    
+    switch (error)
+    {
+        case 1:
+            printf("  0   |\n");
+            printf("      |\n");
+            printf("      |\n");
+            break;
+        case 2:
+            printf("  0   |\n");
+            printf(" /    |\n");
+            printf("      |\n");
+            break;
+        case 3:
+            printf("  0   |\n");
+            printf(" /|   |\n");
+            printf("      |\n");
+            break;
+        case 4:
+            printf("  0   |\n");
+            printf(" /|\\  |\n");
+            printf("      |\n");
+            break;
+        case 5:
+            printf("  0   |\n");
+            printf(" /|\\  |\n");
+            printf(" /    |\n");
+            break;
+        case 6:
+            printf("  0   |\n");
+            printf(" /|\\  |\n");
+            printf(" / \\  |\n");
+            break;
+        default:
+            printf("      |\n");
+            printf("      |\n");
+            printf("      |\n");
+            break;
+    }
+    printf("      |\n");
+    printf("--------       %s\n", findWord);
+    if (error == 6)
+    {
+        printf("GAME OVER");
+    }
+    
 }
 
 
@@ -23,6 +88,7 @@ int main(int argc, char *argv[]) {
 
   FILE *file;
   file = fopen(argv[1], "r");
+  Node *listChain = NULL;
 
   int nbrLines = 0;
   int numeroLine = 1;
@@ -44,8 +110,7 @@ int main(int argc, char *argv[]) {
     {
         categoryWord++;
     }
-    if (line[0] != '#') {
-      
+    if (line[0] != '#') {      
       int i = 0;
       while (line[i] != '\0')
       {
@@ -65,11 +130,15 @@ int main(int argc, char *argv[]) {
       {
         char **words = split(line, ",");
         trim(words[2]);
-        // printf("words[2] => %s", words[2]);
         if (strcmp(words[2], "facile") != 0 && strcmp(words[2], "moyen") != 0 && strcmp(words[2], "difficile") != 0) 
         {
             wordError++;
             fprintf(stderr, "Error on line %d : %s", numeroLine, line);
+        }
+
+        if (strcmp(words[2], argv[2]) == 0) 
+        {
+          push(&listChain, words[0]);
         }
       }
       countWord = 0;
@@ -81,12 +150,30 @@ int main(int argc, char *argv[]) {
   {
       fprintf(stderr, "\n%s : invalid file.", argv[1]);
   }
-
-  printf("\n%d", categoryWord);
-  printf("\n%d", wordError);
-  printf("\nnombre de ligne => %d \n", nbrLines);
-
   fclose(file);
-  potence();
+
+  char *findWord = getRandomElement(listChain);
+  char *word = maskWord(findWord);
+  char str[50];
+  rules();  
+
+  bool tru = true;
+  int error = 0;
+  while (tru)
+  {
+      potence(word, error);
+      printf("\nEntrer un mot ou un caractere : ");
+      fflush(stdout);
+      fgets(str, sizeof(str), stdin);
+      str[strcspn(str, "\n")] = 0;
+      printf(str);
+      if (strcmp(str, "pomme") == 0)
+      {
+          tru = false;
+      }
+      else {
+          error++;
+      }
+  }
   return 0;
 }
