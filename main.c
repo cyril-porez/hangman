@@ -4,6 +4,9 @@
 #include "listChain.h"
 #include <stdbool.h>
 
+char **split(char *str, char *charset);
+void trim(char *str);
+
 
 char *maskWord(char *word)
 {
@@ -16,19 +19,17 @@ char *maskWord(char *word)
             word[i] = '*';
         }
     }
-
     return word;
 }
 
 void rules()
 {
-    printf("\n============================\n");
-    printf("        JEU DU PENDU        \n");
-    printf("============================\n");
+    printf("\n======================================\n");
+    printf("              JEU DU PENDU          \n");
+    printf("======================================\n");
 }
 
 void potence(char *findWord, int error) {
-    printf("\nerreur => %d", error);
     printf("\n  -----        %s\n", findWord);
     printf("  |   |\n");    
     switch (error)
@@ -37,57 +38,59 @@ void potence(char *findWord, int error) {
             printf("  0   |\n");
             printf("      |\n");
             printf("      |\n");
+            printf("      |\n");
+            printf("--------       %s\n", findWord);
             break;
         case 2:
             printf("  0   |\n");
             printf(" /    |\n");
             printf("      |\n");
+            printf("      |\n");
+            printf("--------       %s\n", findWord);
             break;
         case 3:
             printf("  0   |\n");
             printf(" /|   |\n");
             printf("      |\n");
+            printf("      |\n");
+            printf("--------       %s\n", findWord);
             break;
         case 4:
             printf("  0   |\n");
             printf(" /|\\  |\n");
             printf("      |\n");
+            printf("      |\n");
+            printf("--------       %s\n", findWord);
             break;
         case 5:
             printf("  0   |\n");
             printf(" /|\\  |\n");
             printf(" /    |\n");
+            printf("      |\n");
+            printf("--------       %s\n", findWord);
             break;
         case 6:
             printf("  0   |\n");
             printf(" /|\\  |\n");
             printf(" / \\  |\n");
+            printf("      |\n");
+            printf("--------       %s\n", findWord);
+            printf("GAME OVER\n");
             break;
         default:
             printf("      |\n");
             printf("      |\n");
             printf("      |\n");
+            printf("      |\n");
+            printf("--------       %s\n", findWord);
             break;
     }
-    printf("      |\n");
-    printf("--------       %s\n", findWord);
-    if (error == 6)
-    {
-        printf("GAME OVER");
-    }
-    
 }
 
-
-char **split(char *str, char *charset);
-void trim(char *str);
-
-int main(int argc, char *argv[]) {  
-  printf("%d\n", argc);
-  printf("argv[2] %s\n\n", argv[2]);
-
+Node* readFileDirectory(char* filname, char* category) 
+{
   FILE *file;
-  file = fopen(argv[1], "r");
+  file = fopen(filname, "r");
   Node *listChain = NULL;
 
   int nbrLines = 0;
@@ -98,22 +101,21 @@ int main(int argc, char *argv[]) {
 
   if (file == NULL)
   {
-    perror("erreur lors de l'ouverture du fichier");
-    printf("%s", "error" );
-    return 1;
+    perror("\nerreur lors de l'ouverture du fichier");
+    exit(1);
   }
 
-  int countWord = 0;
-  while (fgets(line, sizeof(line), file) != NULL) 
-  {
+    int countWord = 0;
+    while (fgets(line, sizeof(line), file) != NULL) 
+    {
     if (line[0] == '#') 
     {
         categoryWord++;
     }
     if (line[0] != '#') {      
-      int i = 0;
-      while (line[i] != '\0')
-      {
+        int i = 0;
+        while (line[i] != '\0')
+        {
         if ((line[i] != ',' && line[i] != '\t' && line[i] != '\n') && 
         (line[i+1] == ',' || line[i+1] == '\t' || line[i+1] == '\n' || line[i+1] == '\0')) 
         {
@@ -133,10 +135,10 @@ int main(int argc, char *argv[]) {
         if (strcmp(words[2], "facile") != 0 && strcmp(words[2], "moyen") != 0 && strcmp(words[2], "difficile") != 0) 
         {
             wordError++;
-            fprintf(stderr, "Error on line %d : %s", numeroLine, line);
+            fprintf(stderr, "\nError on line %d : %s", numeroLine, line);
         }
 
-        if (strcmp(words[2], argv[2]) == 0) 
+        if (strcmp(words[2], category) == 0) 
         {
           push(&listChain, words[0]);
         }
@@ -148,32 +150,64 @@ int main(int argc, char *argv[]) {
   }
   if (wordError == nbrLines - categoryWord)
   {
-      fprintf(stderr, "\n%s : invalid file.", argv[1]);
+      fprintf(stderr, "\n%s : invalid file.", filname);
   }
   fclose(file);
+  return listChain;
+}
 
-  char *findWord = getRandomElement(listChain);
-  char *word = maskWord(findWord);
-  char str[50];
-  rules();  
+int main(int argc, char *argv[]) {  
+  printf("%d\n", argc);
+  printf("argv[2] %s\n\n", argv[2]);
 
-  bool tru = true;
-  int error = 0;
-  while (tru)
+  rules();
+
+  bool test = true;
+  char yesNo;
+  while (test)
   {
-      potence(word, error);
-      printf("\nEntrer un mot ou un caractere : ");
-      fflush(stdout);
-      fgets(str, sizeof(str), stdin);
-      str[strcspn(str, "\n")] = 0;
-      printf(str);
-      if (strcmp(str, "pomme") == 0)
+      Node* listChain = readFileDirectory(argv[1], argv[2]);
+
+      char *findWord = getRandomElement(listChain);
+      char *word = maskWord(findWord);
+      char str[50];
+
+      bool tru = true;
+      int error = 0;
+      while (tru)
       {
-          tru = false;
+          potence(word, error);
+
+          if (error >= 6)
+          {
+              tru = false;
+              // break;
+          }
+
+          if (error < 6) 
+          {
+              printf("\nEntrer un mot ou un caractere : ");
+              fflush(stdout);
+              fgets(str, sizeof(str), stdin);
+              str[strcspn(str, "\n")] = 0;
+          }
+      
+          if (strcmp(str, "pomme") == 0)
+          {
+              tru = false;
+          }
+          else 
+          {
+              error++;
+          }
+      }  
+      printf("Souhaitez-vous relancer une partie?(Y/N) ");
+      scanf(" %c", &yesNo);
+      while ((getchar()) != '\n');
+      if (yesNo == 'N')
+      {
+        test = false;
       }
-      else {
-          error++;
-      }
-  }
+  } 
   return 0;
 }
