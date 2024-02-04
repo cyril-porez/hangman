@@ -87,10 +87,10 @@ void potence(char *findWord, int error)
     }
 }
 
-Node *readFileDirectory(char *filname, char *difficuty)
+Node *readFileDirectory(char *filename, char *difficulty, char *category)
 {
     FILE *file;
-    file = fopen(filname, "r");
+    file = fopen(filename, "r");
     Node *listChain = NULL;
 
     int nbrLines = 0;
@@ -136,10 +136,19 @@ Node *readFileDirectory(char *filname, char *difficuty)
                 if (strcmp(words[2], "facile") != 0 && strcmp(words[2], "moyen") != 0 && strcmp(words[2], "difficile") != 0)
                 {
                     wordError++;
-                    fprintf(stderr, "\nError on line %d : %s", numeroLine, line);
+                    fprintf(stderr, "\nError on line %d : %s\n", numeroLine, line);
                 }
 
-                if (strcmp(words[2], difficuty) == 0)
+                if (category == NULL && difficulty == NULL)
+                {
+                    push(&listChain, words[0]);
+                }
+                else if (strcmp(words[2], difficulty) == 0 && category == NULL)
+                {
+                    printf("%s\n", words[0]);
+                    push(&listChain, words[0]);
+                }
+                else if (strcmp(words[2], difficulty) == 0 && strcmp(words[1], category) == 0)
                 {
                     push(&listChain, words[0]);
                 }
@@ -151,7 +160,7 @@ Node *readFileDirectory(char *filname, char *difficuty)
     }
     if (wordError == nbrLines - categoryWord)
     {
-        fprintf(stderr, "\n%s : invalid file.", filname);
+        fprintf(stderr, "\n%s : invalid file.", filename);
     }
     fclose(file);
     return listChain;
@@ -159,8 +168,9 @@ Node *readFileDirectory(char *filname, char *difficuty)
 
 int main(int argc, char *argv[])
 {
-    printf("%d\n", argc);
-    printf("argv[2] %s\n\n", argv[2]);
+    char *dictionnary = argc > 2 ? argv[1] : "C:\\Users\\porez\\OneDrive\\Bureau\\hangman\\dictionnaire.txt";
+    char *difficulty = argc >= 3 ? argv[2] : NULL;
+    char *category = argc == 4 ? argv[3] : NULL;
 
     rules();
 
@@ -168,7 +178,7 @@ int main(int argc, char *argv[])
     char yesNo;
     while (test)
     {
-        Node *listChain = readFileDirectory(argv[1], argv[2]);
+        Node *listChain = readFileDirectory(dictionnary, difficulty, category);
 
         char *findWord = getRandomElement(listChain);
         char *word = maskWord(findWord);
