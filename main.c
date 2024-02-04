@@ -216,11 +216,7 @@ int main(int argc, char *argv[])
         scanf(" %c", &yesNo);
         while ((getchar()) != '\n')
             ;
-
-        if (yesNo == 'N')
-        {
-            test = false;
-        }
+        test = yesNo == 'N' ? false : true;
     }
     return 0;
 }
