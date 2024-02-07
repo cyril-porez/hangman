@@ -9,16 +9,21 @@ void trim(char *str);
 
 char *maskWord(char *word)
 {
-    int len = strlen(word);
-
-    if (len > 2)
+    char *maskWord = malloc(strlen(word) + 1);
+    if (maskWord != NULL)
     {
-        for (int i = 1; i < len - 1; i++)
+        strcpy(maskWord, word);
+        int len = strlen(word);
+
+        if (len > 2)
         {
-            word[i] = '*';
+            for (int i = 1; i < len - 1; i++)
+            {
+                maskWord[i] = '*';
+            }
         }
     }
-    return word;
+    return maskWord;
 }
 
 void rules()
@@ -181,14 +186,19 @@ int main(int argc, char *argv[])
         Node *listChain = readFileDirectory(dictionnary, difficulty, category);
 
         char *findWord = getRandomElement(listChain);
-        char *word = maskWord(findWord);
+
+        printf(findWord);
+        char *maskedWord = maskWord(findWord);
+        printf(findWord);
+        printf(maskedWord);
         char str[50];
 
         bool tru = true;
-        int error = 0;
+        int error = 0, len = 0;
+
         while (tru)
         {
-            potence(word, error);
+            potence(maskedWord, error);
 
             if (error >= 6)
             {
@@ -201,15 +211,37 @@ int main(int argc, char *argv[])
                 fflush(stdout);
                 fgets(str, sizeof(str), stdin);
                 str[strcspn(str, "\n")] = 0;
+                len = strlen(str);
             }
 
-            if (strcmp(str, "pomme") == 0)
+            if (len == 1)
             {
-                tru = false;
+                int i = 0;
+                bool find = false;
+                while (findWord[i] != '\0')
+                {
+                    printf("%c \n", findWord[i]);
+                    if (findWord[i] == str[0])
+                    {
+                        find = true;
+                        maskedWord[i] = str[0];
+                    }
+                    i++;
+                }
+                if (find == false)
+                    error++;
             }
-            else
+            if (len > 1)
             {
-                error++;
+                printf("test");
+                if (strcmp(str, findWord) == 0)
+                {
+                    tru = false;
+                }
+                else
+                {
+                    error = error + 2;
+                }
             }
         }
         printf("Souhaitez-vous relancer une partie?(Y/N) ");
