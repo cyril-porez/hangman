@@ -33,10 +33,10 @@ void rules()
     printf("======================================\n");
 }
 
-void potence(char *findWord, int error)
+void potence(char *findWord, int error, int tryWord, int tryCharacter)
 {
-    printf("\n  -----        %s\n", findWord);
-    printf("  |   |\n");
+    printf("\n  -----        %s                         Lettre: %d\n", findWord, tryCharacter);
+    printf("  |   |                                        mot: %d\n", tryWord);
     switch (error)
     {
     case 1:
@@ -186,19 +186,16 @@ int main(int argc, char *argv[])
         Node *listChain = readFileDirectory(dictionnary, difficulty, category);
 
         char *findWord = getRandomElement(listChain);
-
-        printf(findWord);
         char *maskedWord = maskWord(findWord);
-        printf(findWord);
-        printf(maskedWord);
+
         char str[50];
 
-        bool tru = true;
+        bool tru = true, victory = false;
         int error = 0, len = 0;
-
+        int tryWord = 3, tryCharacter = 6;
         while (tru)
         {
-            potence(maskedWord, error);
+            potence(maskedWord, error, tryWord, tryCharacter);
 
             if (error >= 6)
             {
@@ -220,31 +217,50 @@ int main(int argc, char *argv[])
                 bool find = false;
                 while (findWord[i] != '\0')
                 {
-                    printf("%c \n", findWord[i]);
                     if (findWord[i] == str[0])
                     {
                         find = true;
+                        victory = true;
                         maskedWord[i] = str[0];
                     }
                     i++;
                 }
                 if (find == false)
+                {
+                    tryCharacter--;
                     error++;
+                }
             }
             if (len > 1)
             {
-                printf("test");
                 if (strcmp(str, findWord) == 0)
                 {
+                    printf("YOU WIN !!!\n");
+                    victory = true;
                     tru = false;
                 }
                 else
                 {
+                    tryWord--;
                     error = error + 2;
                 }
             }
         }
-        printf("Souhaitez-vous relancer une partie?(Y/N) ");
+        if (victory == true)
+        {
+            char writeScore;
+            printf("Souhatez-vous inscrire votre score? (Y/N) ");
+            scanf("%c", &writeScore);
+            if (writeScore == 'Y')
+            {
+                char name[20];
+                printf("Veuiler entrer votre nom !");
+                scanf("%d", name);
+            }
+            printf("OK");
+        }
+
+        printf("Souhaitez-vous relancer une partie? (Y/N) ");
         scanf(" %c", &yesNo);
         while ((getchar()) != '\n')
             ;
