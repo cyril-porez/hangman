@@ -45,10 +45,10 @@ int main(int argc, char *argv[])
 
 		char *findWord = getRandomElement(listChain);
 		char *maskedWord = maskWord(findWord), str[50];
-		bool victory = false;
+		bool victory = false, tru = true;
 		int error = 0, len = 0, tryWord = 3, tryCharacter = 6, attemptNbr = 0;
 
-		while (error <= 9)
+		while (tru)
 		{
 			potence(maskedWord, error, tryWord, tryCharacter);
 
@@ -72,23 +72,30 @@ int main(int argc, char *argv[])
 					if (findWord[i] == str[0])
 					{
 						find = true;
-						victory = true;
 						maskedWord[i] = str[0];
 					}
 					i++;
 				}
+				if (strcmp(maskedWord, findWord) == 0)
+				{
+					tru = false;
+					victory = true;
+				}
+
 				if (find == false)
 				{
 					tryCharacter--;
 					error++;
 				}
 			}
+
 			if (len > 1)
 			{
 				if (strcmp(str, findWord) == 0)
 				{
 					printf("YOU WIN !!!\n");
 					victory = true;
+					tru = false;
 				}
 				else
 				{
