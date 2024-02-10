@@ -78,6 +78,8 @@ int main(int argc, char *argv[])
 				}
 				if (strcmp(maskedWord, findWord) == 0)
 				{
+					potence(maskedWord, error, tryWord, tryCharacter);
+					printf("You Win !!!\n");
 					tru = false;
 					victory = true;
 				}
@@ -93,6 +95,7 @@ int main(int argc, char *argv[])
 			{
 				if (strcmp(str, findWord) == 0)
 				{
+					potence(maskedWord, error, tryWord, tryCharacter);
 					printf("YOU WIN !!!\n");
 					victory = true;
 					tru = false;
@@ -115,7 +118,7 @@ int main(int argc, char *argv[])
 				printf("Veuiler entrer votre nom !");
 				scanf("%s", name);
 			}
-			printf("OK");
+			printf("OK\n");
 		}
 
 		printf("Souhaitez-vous relancer une partie? (Y/N) ");
