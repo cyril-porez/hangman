@@ -35,6 +35,12 @@ int main(int argc, char *argv[])
 	char *difficulty = argc >= 3 ? argv[2] : NULL;
 	char *category = argc == 4 ? argv[3] : NULL;
 
+	if (difficulty != NULL && (strcmp(difficulty, "facile") != 0 && strcmp(difficulty, "moyen") != 0 && strcmp(difficulty, "difficile") != 0))
+	{
+		printf("Le niveau de difficulte doit etre facile, moyen, difficile !!");
+		exit(1);
+	}
+
 	rules();
 
 	bool test = true;
