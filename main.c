@@ -52,22 +52,49 @@ int main(int argc, char *argv[])
 		{
 			potence(maskedWord, error, tryWord, tryCharacter);
 
+			if (tryWord == 0 && tryCharacter == 0)
+			{
+				printf("Plus d'essais disponibles. Fin du jeu.\n");
+				tru = false;
+			}
+
 			if (error < 9)
 			{
-				printf("\nEntrer un mot ou un caractere : ");
-				fflush(stdout);
-				fgets(str, sizeof(str), stdin);
-				str[strcspn(str, "\n")] = 0;
-				len = strlen(str);
-				attemptNbr++;
-				printf("%d", attemptNbr);
+				while (1)
+				{
+					printf("\nEntrer un mot ou un caractere : ");
+					fflush(stdout);
+					fgets(str, sizeof(str), stdin);
+					str[strcspn(str, "\n")] = 0;
+					len = strlen(str);
+
+					if ((tryWord > 0 && len > 2) || (tryCharacter > 0 && len == 1))
+					{
+						attemptNbr++;
+						printf("%d", attemptNbr);
+						break;
+					}
+					else if (tryWord == 0 && len > 2)
+					{
+						printf("Vous n'avez plus d'essai pour entrer un mot!\n");
+					}
+					else if (tryCharacter == 0 && len == 1)
+					{
+						printf("Vous n'avez plus d'essai pour entrer un caractere!\n");
+					}
+					else
+					{
+						printf("Entree non valide, veuillez reessayer.\n");
+					}
+				}
 			}
 
 			if (len == 1)
 			{
-				int i = 0;
+				int i = 1;
+				int sizeFindWord = strlen(findWord);
 				bool find = false;
-				while (findWord[i] != '\0')
+				while (i <= sizeFindWord - 2)
 				{
 					if (findWord[i] == str[0])
 					{
@@ -110,7 +137,7 @@ int main(int argc, char *argv[])
 		if (victory == true)
 		{
 			char writeScore;
-			printf("Souhatez-vous inscrire votre score? (Y/N) ");
+			printf("Souhaitez-vous inscrire votre score? (Y/N) ");
 			scanf("%c", &writeScore);
 			if (writeScore == 'Y')
 			{
