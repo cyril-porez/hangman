@@ -10,6 +10,22 @@ void rules();
 void potence(char *findWord, int error, int tryWord, int tryCharacter);
 Node *readFileDirectory(char *filename, char *difficulty, char *category);
 
+void fileScore(char *name, int score, char *esdifficulty)
+{
+	FILE *file = fopen("score.txt", "w");
+
+	if (file != NULL)
+	{
+		fprintf(file, "Username					Score					Difficulty\n");
+		fprintf(file, "%s								%d						%s", name, score, difficulty);
+		fclose(file);
+	}
+	else
+	{
+		printf("erreur de l'ouverture du fichier.");
+	}
+}
+
 char *maskWord(char *word)
 {
 	char *maskWord = malloc(strlen(word) + 1);
@@ -150,6 +166,7 @@ int main(int argc, char *argv[])
 				char name[20];
 				printf("Veuiler entrer votre nom !");
 				scanf("%s", name);
+				fileScore(name, attemptNbr, difficulty);
 			}
 			printf("OK\n");
 		}
