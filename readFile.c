@@ -18,6 +18,8 @@ Node *readFileDirectory(char *filename, char *difficulty, char *category)
   char line[100];
   int wordError = 0;
 
+  printf("test");
+
   if (file == NULL)
   {
     perror("\nerreur lors de l'ouverture du fichier");
