@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
 	rules();
 
 	bool test = true;
-	char yesNo;
+
 	while (test)
 	{
 		Node *listChain = readFileDirectory(dictionnary, difficulty, category);
@@ -205,24 +205,33 @@ int main(int argc, char *argv[])
 		}
 		if (victory == true)
 		{
-			char writeScore;
-			printf("Souhaitez-vous inscrire votre score? (Y/N) ");
-			scanf("%c", &writeScore);
-			if (writeScore == 'Y')
+			char writeScore = '\0';
+
+			while (writeScore != 'Y' && writeScore != 'N')
 			{
-				char name[20];
-				printf("Veuiler entrer votre nom !");
-				scanf("%s", name);
-				printf("\n%s  %d   %s", name, attemptNbr, difficulty);
-				fileScore(&sb, name, attemptNbr, difficulty);
+				printf("Souhaitez-vous inscrire votre score? [Y/N] ");
+				scanf(" %c", &writeScore);
+				while (getchar() != '\n')
+					;
+
+				if (writeScore == 'Y')
+				{
+					char name[20];
+					printf("Veuiler entrer votre nom !");
+					scanf("%s", name);
+					fileScore(&sb, name, attemptNbr, difficulty);
+				}
 			}
-			printf("OK\n");
 		}
 
-		printf("Souhaitez-vous relancer une partie? (Y/N) ");
-		scanf(" %c", &yesNo);
-		while ((getchar()) != '\n')
-			;
+		char yesNo = '\0';
+		while (yesNo != 'Y' && yesNo != 'N')
+		{
+			printf("Souhaitez-vous relancer une partie? [Y/N] ");
+			scanf(" %c", &yesNo);
+			while ((getchar()) != '\n')
+				;
+		}
 		test = yesNo == 'N' ? false : true;
 	}
 	return 0;
