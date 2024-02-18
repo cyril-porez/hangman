@@ -38,3 +38,10 @@ void displayScore(FILE *file, Score *scores, int size)
     fprintf(file, "\n%s      %d      %s", scores[i].name, scores[i].score, scores[i].difficulty);
   }
 }
+
+int compareScore(const void *a, const void *b)
+{
+  const Score *scoreA = (const Score *)a;
+  const Score *scoreB = (const Score *)b;
+  return scoreA->score - scoreB->score;
+}

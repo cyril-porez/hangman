@@ -12,6 +12,7 @@ void potence(char *findWord, int error, int tryWord, int tryCharacter);
 Node *readFileDirectory(char *filename, char *difficulty, char *category);
 void addScore(ScoreBoard *sb, const char *nom, int score, const char *difficulty);
 void displayScore(FILE *file, Score *scores, int size);
+int compareScore(const void *a, const void *b);
 
 void readFileScore(ScoreBoard *sb)
 {
@@ -52,6 +53,11 @@ void fileScore(ScoreBoard *sb, char *name, int score, char *difficulty)
 	if (file != NULL)
 	{
 		addScore(sb, name, score, difficulty);
+
+		qsort(sb->hard, sb->sizeHard, sizeof(Score), compareScore);
+		qsort(sb->middle, sb->sizeMiddle, sizeof(Score), compareScore);
+		qsort(sb->easy, sb->sizeEasy, sizeof(Score), compareScore);
+		fprintf(file, "USERNAME        SCORE        LEVEL");
 		displayScore(file, sb->hard, sb->sizeHard);
 		displayScore(file, sb->middle, sb->sizeMiddle);
 		displayScore(file, sb->easy, sb->sizeEasy);
