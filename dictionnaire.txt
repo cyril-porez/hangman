@@ -7,3 +7,4 @@ papaye,fruits,difficile
 html,langages,facile
 assembly,langages,difficile
 cobol,langages,wth?
+javascript,langages,moyen
