@@ -2,7 +2,8 @@ TARGET = hangman
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -I/mingw64/include
+LDFLAGS = -L/mingw64/lib -lncurses
 
 SRC = main.c split.c trim.c listChain.c rules.c potence.c readFile.c tabListScore.c
 
@@ -12,7 +13,7 @@ all:
 	$(TARGET)
 
 $(TARGET): $(OBJ)
-		$(CC) $(CFLAGS) -o $@ $^
+		$(CC) $(OBJ) -o $(TARGET) $(LDFLAGS)
 
 %.o: %.c
 		$(CC) $(CFLAGS) -c $< -o $@

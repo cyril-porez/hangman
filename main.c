@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include "listChain.h"
 #include "tabListScore.h"
+#include <ncursesw/ncurses.h>
 
 char **split(char *str, char *charset);
 void trim(char *str);
@@ -189,6 +190,7 @@ int main(int argc, char *argv[])
 			{
 				if (strcmp(str, findWord) == 0)
 				{
+					maskedWord = findWord;
 					potence(maskedWord, error, tryWord, tryCharacter);
 					printf("YOU WIN !!!\n");
 					victory = true;
