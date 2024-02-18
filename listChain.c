@@ -4,10 +4,10 @@
 #include <time.h>
 #include "listChain.h"
 
-Node* createNode(const char *data)
+Node *createNode(const char *data)
 {
     Node *newNode = (Node *)malloc(sizeof(Node));
-    if(newNode == NULL)
+    if (newNode == NULL)
     {
         printf("Erreur allocation mémoire");
         exit(1);
@@ -21,12 +21,12 @@ void push(Node **headRef, const char *str)
 {
     Node *newNode = createNode(str);
     newNode->next = *headRef;
-    *headRef = newNode; 
-} 
+    *headRef = newNode;
+}
 
 void displayListChain(Node *node)
 {
-    while(node != NULL)
+    while (node != NULL)
     {
         printf("%s -> ", node->data);
         node = node->next;
@@ -34,7 +34,7 @@ void displayListChain(Node *node)
     printf("NULL\n");
 }
 
-int getListSize(Node *listChain) 
+int getListSize(Node *listChain)
 {
     int size = 0;
     while (listChain != NULL)
@@ -50,30 +50,14 @@ char *getRandomElement(Node *chainList)
     int size = getListSize(chainList);
     if (size == 0)
     {
-      return NULL;
+        return NULL;
     }
     srand(time(NULL));
     int searchValueRandom = rand() % size;
 
-    for(int i = 0; i < searchValueRandom; i++) 
+    for (int i = 0; i < searchValueRandom; i++)
     {
-      chainList = chainList->next;
+        chainList = chainList->next;
     }
     return chainList->data;
 }
-
-// int main() 
-// {
-//     Node *chain = NULL;
-//     push(&chain, "test");
-//     push(&chain, "test2");
-//     push(&chain, "Bonjour");
-//     push(&chain, "azerty");
-//     push(&chain, "poiuytreza");
-
-//     displayListChain(chain);
-//     printf("%d\n", getListSize(chain));
-//     printf("%s", getRandomElement(chain));
-
-
-// }
