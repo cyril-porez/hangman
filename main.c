@@ -38,8 +38,6 @@ void readFileScore(ScoreBoard *sb)
 			char *level = test[2];
 
 			addScore(sb, name, score, level);
-
-			printf("%s  %d  %s\n", name, score, level);
 		}
 	}
 
