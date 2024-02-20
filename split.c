@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-int		ft_in_seperator(char c, char *charset)
+int ft_in_seperator(char c, char *charset)
 {
 	int i;
 
@@ -14,9 +14,9 @@ int		ft_in_seperator(char c, char *charset)
 	return (0);
 }
 
-int		count_words(char *str, char *charset)
+int count_words(char *str, char *charset)
 {
-	int	count;
+	int count;
 
 	count = 0;
 	while (*str)
@@ -33,10 +33,10 @@ int		count_words(char *str, char *charset)
 	return (count);
 }
 
-char	*alloc_word(char *str, char *charset)
+char *alloc_word(char *str, char *charset)
 {
-	char	*word;
-	int		i;
+	char *word;
+	int i;
 
 	i = 0;
 	while (*(str + i) && !ft_in_seperator(*(str + i), charset))
@@ -53,12 +53,12 @@ char	*alloc_word(char *str, char *charset)
 	return (word);
 }
 
-char	**split(char *str, char *charset)
+char **split(char *str, char *charset)
 {
-	char	**words;
-	int		count;
-	int		size;
-	int		j;
+	char **words;
+	int count;
+	int size;
+	int j;
 
 	size = count_words(str, charset);
 	if (!(words = (char **)malloc(sizeof(char *) * (size + 1))))
@@ -82,3 +82,14 @@ char	**split(char *str, char *charset)
 	return (words);
 }
 
+void freeSplit(char **words)
+{
+	int i = 0;
+	while (words[i] != NULL)
+	{
+		free(words[i]);
+		i++;
+	}
+
+	free(words);
+}

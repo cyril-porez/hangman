@@ -5,6 +5,8 @@
 
 char **split(char *str, char *charset);
 void trim(char *str);
+void freeSplit(char **words);
+void push(Node **headRef, const char *str);
 
 Node *readFileDirectory(char *filename, char *difficulty, char *category)
 {
@@ -71,6 +73,7 @@ Node *readFileDirectory(char *filename, char *difficulty, char *category)
         {
           push(&listChain, words[0]);
         }
+        freeSplit(words);
       }
       countWord = 0;
     }

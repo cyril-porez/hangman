@@ -7,6 +7,7 @@
 #include <ncursesw/ncurses.h>
 
 char **split(char *str, char *charset);
+void freeSplit(char **words);
 void trim(char *str);
 void rules();
 void potence(char *findWord, int error, int tryWord, int tryCharacter);
@@ -28,17 +29,18 @@ void readFileScore(ScoreBoard *sb)
 
 	while (fgets(line, sizeof(line), file) != NULL)
 	{
-		char **test = split(line, " ");
-		if (test != NULL)
+		char **splitStr = split(line, " ");
+		if (splitStr != NULL)
 		{
-			trim(test[0]);
-			trim(test[1]);
-			trim(test[2]);
-			char *name = test[0];
-			int score = atoi(test[1]);
-			char *level = test[2];
+			trim(splitStr[0]);
+			trim(splitStr[1]);
+			trim(splitStr[2]);
+			char *name = splitStr[0];
+			int score = atoi(splitStr[1]);
+			char *level = splitStr[2];
 
 			addScore(sb, name, score, level);
+			freeSplit(splitStr);
 		}
 	}
 
@@ -60,7 +62,6 @@ void fileScore(ScoreBoard *sb, char *name, int score, char *difficulty)
 		displayScore(file, sb->hard, sb->sizeHard);
 		displayScore(file, sb->middle, sb->sizeMiddle);
 		displayScore(file, sb->easy, sb->sizeEasy);
-
 		fclose(file);
 	}
 	else
@@ -106,7 +107,6 @@ int main(int argc, char *argv[])
 	rules();
 
 	bool test = true;
-
 	while (test)
 	{
 		Node *listChain = readFileDirectory(dictionnary, difficulty, category);
@@ -220,6 +220,9 @@ int main(int argc, char *argv[])
 					printf("Veuiler entrer votre nom !");
 					scanf("%s", name);
 					fileScore(&sb, name, attemptNbr, difficulty);
+					free(sb.easy);
+					free(sb.middle);
+					free(sb.hard);
 				}
 			}
 		}
