@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "tabListScore.h"
+#include "../fichierH/tabListScore.h"
 
 void addScore(ScoreBoard *sb, const char *nom, int score, const char *difficulty)
 {

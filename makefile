@@ -2,10 +2,10 @@ TARGET = hangman
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -I/mingw64/include
+CFLAGS = -Wall -Wextra -Werror -I/mingw64/include -IfichierC
 LDFLAGS = -L/mingw64/lib -lncurses
 
-SRC = main.c split.c trim.c listChain.c rules.c potence.c readFile.c tabListScore.c
+SRC = main.c fichierC/split.c fichierC/trim.c fichierC/listChain.c fichierC/rules.c fichierC/potence.c fichierC/readFile.c fichierC/tabListScore.c
 
 OBJ = $(SRC:.c=.o)
 

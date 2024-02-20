@@ -1,7 +1,7 @@
-#include "listChain.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "../fichierH/listChain.h"
 
 char **split(char *str, char *charset);
 void trim(char *str);
