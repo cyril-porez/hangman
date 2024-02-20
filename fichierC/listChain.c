@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "listChain.h"
+#include "../fichierH/listChain.h"
 
 Node *createNode(const char *data)
 {

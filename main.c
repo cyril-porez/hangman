@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "listChain.h"
-#include "tabListScore.h"
+#include "fichierH/listChain.h"
+#include "fichierH/tabListScore.h"
 #include <ncursesw/ncurses.h>
 
 char **split(char *str, char *charset);
