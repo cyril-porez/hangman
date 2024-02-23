@@ -60,3 +60,23 @@ char *getRandomElement(Node *chainList)
     }
     return chainList->data;
 }
+
+void freeNode(Node *node)
+{
+    if (node != NULL)
+    {
+        free(node->data);
+        free(node);
+    }
+}
+
+void freeChain(Node *head)
+{
+    Node *tmp;
+    while (head != NULL)
+    {
+        tmp = head;
+        head = head->next;
+        freeNode(tmp);
+    }
+}

@@ -14,6 +14,7 @@ Node *readFileDirectory(char *filename, char *difficulty, char *category);
 void addScore(ScoreBoard *sb, const char *nom, int score, const char *difficulty);
 void displayScore(FILE *file, Score *scores, int size);
 int compareScore(const void *a, const void *b);
+void freeChain(Node *head);
 
 void readFileScore(ScoreBoard *sb)
 {
@@ -237,6 +238,9 @@ void hangman(char *dictionnary, char *difficulty, char *category)
         ;
     }
     test = yesNo == 'N' ? false : true;
+
+    freeSplit(splitLine);
+    freeChain(listChain);
   }
   free(sb.easy);
   free(sb.middle);

@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "fichierH/hangman.h"
-#include <ncursesw/ncurses.h>
+#include <ncurses.h>
 
 void hangman(char *dictionnary, char *difficulty, char *category);
 
@@ -17,11 +17,11 @@ int main(int argc, char *argv[])
 		printf("Le niveau de difficulte doit etre facile, moyen, difficile !!");
 		exit(1);
 	}
-	// initscr();							 // Initialise le mode ncurses
-	// printw("Hello, World!"); // Affiche un message
-	// refresh();							 // Met à jour l'écran
-	// getch();								 // Attend une entrée utilisateur
-	// endwin();
+	initscr();							 // Initialise le mode ncurses
+	printw("Hello, World!"); // Affiche un message
+	refresh();							 // Met à jour l'écran
+	getch();								 // Attend une entrée utilisateur
+	endwin();
 
 	hangman(dictionnary, difficulty, category);
 	return 0;
