@@ -13,6 +13,7 @@ Node *readFileDirectory(char *filename, char *difficulty, char *category)
   FILE *file;
   file = fopen(filename, "r");
   Node *listChain = NULL;
+  printf("%s", filename);
 
   int nbrLines = 0;
   int numeroLine = 1;
@@ -22,7 +23,7 @@ Node *readFileDirectory(char *filename, char *difficulty, char *category)
 
   if (file == NULL)
   {
-    perror("\nerreur lors de l'ouverture du fichier");
+    perror("\nerreur lors de l'ouverture du fichier dictionnaire.");
     exit(1);
   }
 
@@ -62,16 +63,18 @@ Node *readFileDirectory(char *filename, char *difficulty, char *category)
 
         if (category == NULL && difficulty == NULL)
         {
-          push(&listChain, words[0]);
+          if (strcmp(words[2], "facile") == 0 || strcmp(words[2], "moyen") == 0 || strcmp(words[2], "difficile") == 0)
+          {
+            push(&listChain, line);
+          }
         }
         else if (strcmp(words[2], difficulty) == 0 && category == NULL)
         {
-          printf("%s\n", words[0]);
-          push(&listChain, words[0]);
+          push(&listChain, line);
         }
         else if (strcmp(words[2], difficulty) == 0 && strcmp(words[1], category) == 0)
         {
-          push(&listChain, words[0]);
+          push(&listChain, line);
         }
         freeSplit(words);
       }

@@ -28,7 +28,6 @@ void displayListChain(Node *node)
 {
     while (node != NULL)
     {
-        printf("%s -> ", node->data);
         node = node->next;
     }
     printf("NULL\n");

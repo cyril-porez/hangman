@@ -6,13 +6,14 @@
 void addScore(ScoreBoard *sb, const char *nom, int score, const char *difficulty)
 {
   Score s;
-  strncpy(s.name, nom, MAXNOM);
+  strcpy(s.name, nom);
   s.score = score;
-  strncpy(s.difficulty, difficulty, 10);
+  strcpy(s.difficulty, difficulty);
 
   if (strcmp(difficulty, "facile") == 0)
   {
     sb->easy = realloc(sb->easy, (sb->sizeEasy + 1) * sizeof(Score));
+    // memcpy(&sb->easy[sb->sizeEasy++], &s, sizeof(s));
     sb->easy[sb->sizeEasy++] = s;
   }
   else if (strcmp(difficulty, "moyen") == 0)
@@ -35,7 +36,7 @@ void displayScore(FILE *file, Score *scores, int size)
 {
   for (int i = 0; i < size; i++)
   {
-    fprintf(file, "\n%s      %d      %s", scores[i].name, scores[i].score, scores[i].difficulty);
+    fprintf(file, "%s %d %s\n", scores[i].name, scores[i].score, scores[i].difficulty);
   }
 }
 
