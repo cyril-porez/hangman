@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "../fichierH/listChain.h"
+#include <ncurses.h>
 
 char **split(char *str, char *charset);
 void trim(char *str);
@@ -13,7 +14,6 @@ Node *readFileDirectory(char *filename, char *difficulty, char *category)
   FILE *file;
   file = fopen(filename, "r");
   Node *listChain = NULL;
-  printf("%s", filename);
 
   int nbrLines = 0;
   int numeroLine = 1;
@@ -53,16 +53,21 @@ Node *readFileDirectory(char *filename, char *difficulty, char *category)
 
       if (countWord == 3)
       {
+        printw("%s", line);
         char **words = split(line, ",");
+        // fprintf(stderr, "test error ");
         trim(words[2]);
         if (strcmp(words[2], "facile") != 0 && strcmp(words[2], "moyen") != 0 && strcmp(words[2], "difficile") != 0)
         {
           wordError++;
-          fprintf(stderr, "\nError on line %d : %s\n", numeroLine, line);
+          fprintf(stderr, "\nError on line test %d : %s\n", numeroLine, line);
         }
 
         if (category == NULL && difficulty == NULL)
         {
+
+                    refresh();
+
           if (strcmp(words[2], "facile") == 0 || strcmp(words[2], "moyen") == 0 || strcmp(words[2], "difficile") == 0)
           {
             push(&listChain, line);

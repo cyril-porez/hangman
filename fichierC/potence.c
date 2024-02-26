@@ -1,99 +1,128 @@
 #include <stdio.h>
+#include <ncurses.h>
 
 void potence(char *findWord, char *categoryWord, int error, int tryWord, int tryCharacter)
 {
   switch (error)
   {
   case 1:
-    printf("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
-    printf("  |   |                                        mot: %d\n", tryWord);
-    printf("  0   |\n");
-    printf("      |\n");
-    printf("      |\n");
-    printf("      |\n");
-    printf("--------       %s\n", findWord);
+    clear();
+    move(0, 0);
+    printw("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
+    printw("  |   |                                        mot: %d\n", tryWord);
+    printw("  0   |\n");
+    printw("      |\n");
+    printw("      |\n");
+    printw("      |\n");
+    printw("--------       %s\n", findWord);
+    refresh();
     break;
   case 2:
-    printf("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
-    printf("  |   |                                        mot: %d\n", tryWord);
-    printf("  0   |\n");
-    printf(" /    |\n");
-    printf("      |\n");
-    printf("      |\n");
-    printf("--------       %s\n", findWord);
+    clear();
+    move(0, 0);
+    printw("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
+    printw("  |   |                                        mot: %d\n", tryWord);
+    printw("  0   |\n");
+    printw(" /    |\n");
+    printw("      |\n");
+    printw("      |\n");
+    printw("--------       %s\n", findWord);
+    refresh();
     break;
   case 3:
-    printf("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
-    printf("  |   |                                        mot: %d\n", tryWord);
-    printf("  0   |\n");
-    printf(" /|   |\n");
-    printf("      |\n");
-    printf("      |\n");
-    printf("---------      %s\n", findWord);
+    clear();
+    move(0, 0);
+    printw("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
+    printw("  |   |                                        mot: %d\n", tryWord);
+    printw("  0   |\n");
+    printw(" /|   |\n");
+    printw("      |\n");
+    printw("      |\n");
+    printw("---------      %s\n", findWord);
+    refresh();
     break;
   case 4:
-    printf("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
-    printf("  |   |                                        mot: %d\n", tryWord);
-    printf("  0   |\n");
-    printf(" /|\\  |\n");
-    printf("      |\n");
-    printf("      |\n");
-    printf("---------      %s\n", findWord);
+    clear();
+    move(0, 0);
+    printw("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
+    printw("  |   |                                        mot: %d\n", tryWord);
+    printw("  0   |\n");
+    printw(" /|\\  |\n");
+    printw("      |\n");
+    printw("      |\n");
+    printw("---------      %s\n", findWord);
+    refresh();
     break;
   case 5:
-    printf("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
-    printf("  |   |                                        mot: %d\n", tryWord);
-    printf("  0   |\n");
-    printf(" /|\\  |\n");
-    printf(" /    |\n");
-    printf("      |\n");
-    printf("--------       %s\n", findWord);
+    clear();
+    move(0, 0);
+    printw("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
+    printw("  |   |                                        mot: %d\n", tryWord);
+    printw("  0   |\n");
+    printw(" /|\\  |\n");
+    printw(" /    |\n");
+    printw("      |\n");
+    printw("--------       %s\n", findWord);
+    refresh();
     break;
   case 6:
-    printf("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
-    printf("  |   |                                        mot: %d\n", tryWord);
-    printf("  0   |\n");
-    printf(" /|\\  |\n");
-    printf(" / \\  |\n");
-    printf("      |\n");
-    printf("--------       %s\n", findWord);
+    clear();
+    move(0, 0);
+    printw("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
+    printw("  |   |                                        mot: %d\n", tryWord);
+    printw("  0   |\n");
+    printw(" /|\\  |\n");
+    printw(" / \\  |\n");
+    printw("      |\n");
+    printw("--------       %s\n", findWord);
+    refresh();
     break;
   case 7:
-    printf("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
-    printf("  |  \\|                                        mot: %d\n", tryWord);
-    printf("  0   |\n");
-    printf(" /|\\  |\n");
-    printf(" / \\  |\n");
-    printf("      |\n");
-    printf("--------       %s\n", findWord);
+    clear();
+    move(0, 0);
+    printw("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
+    printw("  |  \\|                                        mot: %d\n", tryWord);
+    printw("  0   |\n");
+    printw(" /|\\  |\n");
+    printw(" / \\  |\n");
+    printw("      |\n");
+    printw("--------       %s\n", findWord);
+    refresh();
     break;
   case 8:
-    printf("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
-    printf("  |  \\|                                        mot: %d\n", tryWord);
-    printf("  0   |\n");
-    printf(" /|\\  |\n");
-    printf(" / \\  |\n");
-    printf("      |\\\n");
-    printf("---------      %s\n", findWord);
+    clear();
+    move(0, 0);
+    printw("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
+    printw("  |  \\|                                        mot: %d\n", tryWord);
+    printw("  0   |\n");
+    printw(" /|\\  |\n");
+    printw(" / \\  |\n");
+    printw("      |\\\n");
+    printw("---------      %s\n", findWord);
+    refresh();
     break;
   case 9:
-    printf("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
-    printf("  |  \\|                                        mot: %d\n", tryWord);
-    printf("  0   |\n");
-    printf(" /|\\  |\n");
-    printf(" / \\  |\n");
-    printf("      |\\\n");
-    printf("---------      %s\n", findWord);
-    printf("GAME OVER\n");
+    clear();
+    move(0, 0);
+    printw("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
+    printw("  |  \\|                                        mot: %d\n", tryWord);
+    printw("  0   |\n");
+    printw(" /|\\  |\n");
+    printw(" / \\  |\n");
+    printw("      |\\\n");
+    printw("---------      %s\n", findWord);
+    printw("GAME OVER\n");
+    refresh();
     break;
   default:
-    printf("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
-    printf("  |   |                                        mot: %d\n", tryWord);
-    printf("      |\n");
-    printf("      |\n");
-    printf("      |\n");
-    printf("      |\n");
-    printf("--------       %s\n", findWord);
+    printw("\n  -----        %s                         Lettre: %d\n", categoryWord, tryCharacter);
+    printw("  |   |                                        mot: %d\n", tryWord);
+    printw("      |\n");
+    printw("      |\n");
+    printw("      |\n");
+    printw("      |\n");
+    printw("--------       %s\n", findWord);
+    refresh();
     break;
   }
 }

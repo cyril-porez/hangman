@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include "../fichierH/listChain.h"
 #include "../fichierH/tabListScore.h"
+#include <ncurses.h>
 
 char **split(char *str, char *charset);
 void freeSplit(char **words);
@@ -43,8 +44,8 @@ void readFileScore(ScoreBoard *sb)
       char *level = splitStr[2];
 
       addScore(sb, name, score, level);
-      freeSplit(splitStr);
     }
+    freeSplit(splitStr);
   }
 
   fclose(file);
@@ -69,7 +70,7 @@ void fileScore(ScoreBoard *sb, char *name, int score, char *difficulty)
   }
   else
   {
-    printf("erreur de l'ouverture du fichier.");
+    printw("erreur de l'ouverture du fichier.");
   }
 }
 
@@ -99,9 +100,9 @@ void hangman(char *dictionnary, char *difficulty, char *category)
 {
   ScoreBoard sb = {0};
   readFileScore(&sb);
-
+  clear();
+  move(0, 0);
   rules();
-
   bool test = true;
   while (test)
   {
@@ -124,10 +125,10 @@ void hangman(char *dictionnary, char *difficulty, char *category)
     while (tru)
     {
       potence(maskedWord, categoryWord, error, tryWord, tryCharacter);
-
       if (tryWord == 0 && tryCharacter == 0)
       {
-        printf("Plus d'essais disponibles. Fin du jeu.\n");
+        printw("Plus d'essais disponibles. Fin du jeu.\n");
+        refresh();
         tru = false;
       }
 
@@ -135,12 +136,14 @@ void hangman(char *dictionnary, char *difficulty, char *category)
       {
         while (1)
         {
-          printf("\nEntrer un mot ou un caractere : ");
-          fflush(stdout);
-          fgets(str, sizeof(str), stdin);
+          printw("\nEntrer un mot ou un caractere : ");
+          refresh();
+
+          getnstr(str, sizeof(str) - 1);
+
           str[strcspn(str, "\n")] = 0;
           len = strlen(str);
-
+          refresh();
           if ((tryWord > 0 && len > 2) || (tryCharacter > 0 && len == 1))
           {
             attemptNbr++;
@@ -148,15 +151,18 @@ void hangman(char *dictionnary, char *difficulty, char *category)
           }
           else if (tryWord == 0 && len > 2)
           {
-            printf("Vous n'avez plus d'essai pour entrer un mot!\n");
+            printw("Vous n'avez plus d'essai pour entrer un mot!\n");
+            refresh();
           }
           else if (tryCharacter == 0 && len == 1)
           {
-            printf("Vous n'avez plus d'essai pour entrer un caractere!\n");
+            printw("Vous n'avez plus d'essai pour entrer un caractere!\n");
+            refresh();
           }
           else
           {
-            printf("Entree non valide, veuillez reessayer.\n");
+            printw("Entree non valide, veuillez reessayer.\n");
+            refresh();
           }
         }
       }
@@ -177,8 +183,10 @@ void hangman(char *dictionnary, char *difficulty, char *category)
         }
         if (strcmp(maskedWord, findWord) == 0)
         {
+          free(maskedWord);
           potence(maskedWord, categoryWord, error, tryWord, tryCharacter);
-          printf("You Win !!!\n");
+          printw("You Win !!!\n");
+          refresh();
           tru = false;
           victory = true;
         }
@@ -197,7 +205,8 @@ void hangman(char *dictionnary, char *difficulty, char *category)
           free(maskedWord);
           maskedWord = findWord;
           potence(maskedWord, categoryWord, error, tryWord, tryCharacter);
-          printf("You Win !!!\n");
+          printw("You Win !!!\n");
+          refresh();
           victory = true;
           tru = false;
         }
@@ -214,16 +223,16 @@ void hangman(char *dictionnary, char *difficulty, char *category)
 
       while (writeScore != 'Y' && writeScore != 'N')
       {
-        printf("Souhaitez-vous inscrire votre score? [Y/N] ");
-        scanf(" %c", &writeScore);
-        while (getchar() != '\n')
-          ;
-
+        printw("Souhaitez-vous inscrire votre score? [Y/N] ");
+        refresh();
+        scanw(" %c", &writeScore);
+        flushinp();
         if (writeScore == 'Y')
         {
           char name[20];
-          printf("Veuiler entrer votre nom !");
-          scanf("%s", name);
+          printw("Veuiler entrer votre nom !");
+          refresh();
+          getnstr(name, sizeof(name) - 1);
           fileScore(&sb, name, attemptNbr, difficulty);
         }
       }
@@ -232,15 +241,26 @@ void hangman(char *dictionnary, char *difficulty, char *category)
     char yesNo = '\0';
     while (yesNo != 'Y' && yesNo != 'N')
     {
-      printf("Souhaitez-vous relancer une partie? [Y/N] ");
-      scanf(" %c", &yesNo);
-      while ((getchar()) != '\n')
-        ;
+      printw("Souhaitez-vous relancer une partie? [Y/N] ");
+      refresh();
+      scanw(" %c", &yesNo);
+      flushinp();
     }
-    test = yesNo == 'N' ? false : true;
-
+    printf("test 0");
     freeSplit(splitLine);
     freeChain(listChain);
+    test = yesNo == 'N' ? false : true;
+    printf("test 1");
+    printf("test 2");
+    if (test == true)
+    {
+      clear();
+    }
+    else
+    {
+      endwin();
+    }
+    printf("test 3");
   }
   free(sb.easy);
   free(sb.middle);

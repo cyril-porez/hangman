@@ -3,13 +3,14 @@
 #include <string.h>
 #include <time.h>
 #include "../fichierH/listChain.h"
+#include <ncurses.h>
 
 Node *createNode(const char *data)
 {
     Node *newNode = (Node *)malloc(sizeof(Node));
     if (newNode == NULL)
     {
-        printf("Erreur allocation mémoire");
+        printw("Erreur allocation mémoire");
         exit(1);
     }
     newNode->data = strdup(data);
@@ -30,7 +31,7 @@ void displayListChain(Node *node)
     {
         node = node->next;
     }
-    printf("NULL\n");
+    printw("NULL\n");
 }
 
 int getListSize(Node *listChain)
