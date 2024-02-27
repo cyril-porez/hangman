@@ -101,12 +101,11 @@ void hangman(char *dictionnary, char *difficulty, char *category)
   readFileScore(&sb);
 
   rules();
+  Node *listChain = readFileDirectory(dictionnary, difficulty, category);
 
   bool test = true;
   while (test)
   {
-    Node *listChain = readFileDirectory(dictionnary, difficulty, category);
-
     char *line = getRandomElement(listChain);
     char **splitLine = split(line, ",");
     trim(splitLine[0]);
@@ -240,9 +239,9 @@ void hangman(char *dictionnary, char *difficulty, char *category)
     test = yesNo == 'N' ? false : true;
 
     freeSplit(splitLine);
-    freeChain(listChain);
   }
   free(sb.easy);
   free(sb.middle);
   free(sb.hard);
+  freeChain(listChain);
 }
