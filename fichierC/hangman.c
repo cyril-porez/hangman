@@ -104,9 +104,9 @@ void hangman(char *dictionnary, char *difficulty, char *category)
   move(0, 0);
   rules();
   bool test = true;
+  Node *listChain = readFileDirectory(dictionnary, difficulty, category);
   while (test)
   {
-    Node *listChain = readFileDirectory(dictionnary, difficulty, category);
 
     char *line = getRandomElement(listChain);
     char **splitLine = split(line, ",");
@@ -166,7 +166,7 @@ void hangman(char *dictionnary, char *difficulty, char *category)
           }
         }
       }
-
+      clear();
       if (len == 1)
       {
         int i = 1;
@@ -183,12 +183,13 @@ void hangman(char *dictionnary, char *difficulty, char *category)
         }
         if (strcmp(maskedWord, findWord) == 0)
         {
-          free(maskedWord);
+          clear();
           potence(maskedWord, categoryWord, error, tryWord, tryCharacter);
           printw("You Win !!!\n");
           refresh();
           tru = false;
           victory = true;
+          free(maskedWord);
         }
 
         if (find == false)
@@ -204,7 +205,9 @@ void hangman(char *dictionnary, char *difficulty, char *category)
         {
           free(maskedWord);
           maskedWord = findWord;
+          clear();
           potence(maskedWord, categoryWord, error, tryWord, tryCharacter);
+          refresh();
           printw("You Win !!!\n");
           refresh();
           victory = true;
@@ -246,12 +249,9 @@ void hangman(char *dictionnary, char *difficulty, char *category)
       scanw(" %c", &yesNo);
       flushinp();
     }
-    printf("test 0");
     freeSplit(splitLine);
-    freeChain(listChain);
+
     test = yesNo == 'N' ? false : true;
-    printf("test 1");
-    printf("test 2");
     if (test == true)
     {
       clear();
@@ -260,9 +260,9 @@ void hangman(char *dictionnary, char *difficulty, char *category)
     {
       endwin();
     }
-    printf("test 3");
   }
   free(sb.easy);
   free(sb.middle);
   free(sb.hard);
+  freeChain(listChain);
 }
